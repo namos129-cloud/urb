@@ -12,13 +12,14 @@ class UrbexApp:
         self.root = root
         self.root.title("Urbex Crew Management System")
         self.root.geometry("800x700")
+        self.root.configure(bg="#F0F0F0")  # Set background color
 
         # Connect to SQLite database
         self.conn = sqlite3.connect("urbex_crew.db")
         self.create_tables()
 
-        # Create main frame
-        self.main_frame = ttk.Frame(self.root)
+        # Create frames
+        self.main_frame = ttk.Frame(self.root, padding=20)
         self.main_frame.pack(fill=tk.BOTH, expand=True)
 
         # Initialize pages
@@ -41,11 +42,11 @@ class UrbexApp:
 
     def create_login_page(self):
         """Create the login page."""
-        self.login_frame = ttk.Frame(self.main_frame)
+        self.login_frame = ttk.Frame(self.main_frame, padding=10)
         self.login_frame.pack(fill=tk.BOTH, expand=True)
 
         # Title
-        ttk.Label(self.login_frame, text="Login", font=("Helvetica", 24)).pack(pady=10)
+        ttk.Label(self.login_frame, text="Login", font=("Helvetica", 24), background="#F0F0F0").pack(pady=10)
 
         # Username entry
         self.username_entry = ttk.Entry(self.login_frame, width=30)
@@ -62,19 +63,19 @@ class UrbexApp:
 
     def create_home_page(self):
         """Create the home page for adding urbex plans."""
-        self.home_frame = ttk.Frame(self.main_frame)
+        self.home_frame = ttk.Frame(self.main_frame, padding=10)
         self.home_frame.pack(fill=tk.BOTH, expand=True)
 
         # Title
-        title_label = ttk.Label(self.home_frame, text="Urbex Crew Management", font=("Helvetica", 24))
+        title_label = ttk.Label(self.home_frame, text="Urbex Crew Management", font=("Helvetica", 24), background="#F0F0F0")
         title_label.pack(pady=10)
 
         # Current Time Label
-        self.time_label = ttk.Label(self.home_frame, font=("Helvetica", 12))
+        self.time_label = ttk.Label(self.home_frame, font=("Helvetica", 12), background="#F0F0F0")
         self.time_label.pack(pady=5)
 
         # Weather Info Label
-        self.weather_label = ttk.Label(self.home_frame, font=("Helvetica", 12))
+        self.weather_label = ttk.Label(self.home_frame, font=("Helvetica", 12), background="#F0F0F0")
         self.weather_label.pack(pady=5)
 
         # Date entry
@@ -114,10 +115,10 @@ class UrbexApp:
 
     def create_completed_page(self):
         """Create the completed plans page."""
-        self.completed_frame = ttk.Frame(self.main_frame)
+        self.completed_frame = ttk.Frame(self.main_frame, padding=10)
 
         # Title
-        ttk.Label(self.completed_frame, text="Completed Urbex Plans", font=("Helvetica", 24)).pack(pady=10)
+        ttk.Label(self.completed_frame, text="Completed Urbex Plans", font=("Helvetica", 24), background="#F0F0F0").pack(pady=10)
 
         # Completed plans list
         self.completed_listbox = tk.Listbox(self.completed_frame, height=15)
@@ -128,10 +129,10 @@ class UrbexApp:
 
     def create_crew_stats_page(self):
         """Create the crew statistics page."""
-        self.crew_stats_frame = ttk.Frame(self.main_frame)
+        self.crew_stats_frame = ttk.Frame(self.main_frame, padding=10)
 
         # Title
-        ttk.Label(self.crew_stats_frame, text="Crew Statistics", font=("Helvetica", 24)).pack(pady=10)
+        ttk.Label(self.crew_stats_frame, text="Crew Statistics", font=("Helvetica", 24), background="#F0F0F0").pack(pady=10)
 
         # Crew stats list
         self.crew_stats_listbox = tk.Listbox(self.crew_stats_frame, height=15)
@@ -142,10 +143,10 @@ class UrbexApp:
 
     def create_add_crew_page(self):
         """Create the page for adding crew members."""
-        self.add_crew_frame = ttk.Frame(self.main_frame)
+        self.add_crew_frame = ttk.Frame(self.main_frame, padding=10)
 
         # Title
-        ttk.Label(self.add_crew_frame, text="Add Crew Member", font=("Helvetica", 24)).pack(pady=10)
+        ttk.Label(self.add_crew_frame, text="Add Crew Member", font=("Helvetica", 24), background="#F0F0F0").pack(pady=10)
 
         # Name entry
         self.name_entry = ttk.Entry(self.add_crew_frame, width=20)
@@ -204,8 +205,8 @@ class UrbexApp:
             weather_data = response.json()
             if response.status_code == 200:
                 weather_desc = weather_data["weather"][0]["description"]
-                temp = weather_data["main"]["temp"]
-                self.weather_label.config(text=f"Weather in {location}: {temp}°C, {weather_desc}")
+                temperature = weather_data["main"]["temp"]
+                self.weather_label.config(text=f"Weather in {location}: {temperature}°C, {weather_desc}")
             else:
                 self.weather_label.config(text="Weather information not available.")
         except Exception as e:
